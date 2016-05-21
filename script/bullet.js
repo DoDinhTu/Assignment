@@ -5,6 +5,7 @@ class Bullet {
     constructor(x, y,direction) {
         this.x = x;
         this.y = y;
+        this.direction = direction;
         this.speedX = 0;
         this.speedY = 0;
         this.sprite = new Image();
@@ -17,7 +18,36 @@ class Bullet {
         this.spriteLeft.src = "images/bullet_left.png";
         this.spriteRight = new Image();
         this.spriteRight.src = "images/bullet_right.png";
-        this.direction = direction;
+        this.move(direction)
+    }
+
+    move(direction)     {
+        switch(direction){
+            case 1://up
+                this.speedY = -3;
+                this.speedX = 0;
+                this.sprite = this.spriteUp;
+                this.direction = 1;
+                break;
+            case 2://down
+                this.speedY = 3;
+                this.speedX = 0;
+                this.sprite = this.spriteDown;
+                this.direction = 2;
+                break;
+            case 3://left
+                this.speedX = -3;
+                this.speedY = 0;
+                this.sprite = this.spriteLeft;
+                this.direction = 3;
+                break;
+            case 4://right
+                this.speedX = 3;
+                this.speedY = 0;
+                this.sprite = this.spriteRight;
+                this.direction = 4;
+                break;
+            }
     }
 
     update() {
@@ -26,33 +56,5 @@ class Bullet {
     }
     draw(context){
         context.drawImage(this.sprite,this.x,this.y);
-    }
-    move (direction) {
-        switch (direction) {
-            case 1: //Fire up
-                this.sprite = this.spriteUp;
-                this.speedY = -8;
-                this.speedX = 0;
-                this.direction = direction;
-                break;
-            case 2: //Fire down
-                this.sprite = this.spriteDown;
-                this.speedY = 8;
-                this.speedX = 0;
-                this.direction = direction;
-                break;
-            case 3: //Fire left
-                this.sprite = this.spriteLeft;
-                this.speedX = -8;
-                this.speedY = 0;
-                this.direction = direction;
-                break;
-            case 4: //Fire right
-                this.sprite = this.spriteRight;
-                this.speedX = 8;
-                this.speedY = 0;
-                this.direction = direction;
-                break;
-        }
-    }
+    };
 }

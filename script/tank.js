@@ -1,5 +1,6 @@
 class Tank{
     constructor(x, y){
+        this.bullets = new Array();
         this.x = x;
         this.y = y;
         this.speedX = 0;
@@ -16,21 +17,49 @@ class Tank{
         this.sprite = this.spriteUp;
         this.direction = 1;//bien luu huong di chuyen hien tai cua tank
     }
-    update(){
-        this.x += this.speedX;
-        this.y += this.speedY;
+    checkCollision(rect1, rect2){
+        if (rect1.x<rect2.x + rect2.width &&
+            rect1.x + rect1.width > rect2.x &&
+            rect1.y<rect2.y + rect2.height &&
+            rect1.height + rect1.y > rect2.y ){
+                return true;
+        }
+        return false;
     }
-    draw(context){
+    update(){
+        var isMove = true;
+        var rect1 = {x:this.x + this.speedX, y:this.y + this.speedY, width:32, height:32};
+        for(var i = 0; i < arrBrick.length; i++){
+            var rect2 = {x:arrBrick[i].x, y: arrBrick[i].y,width:16, height:16};
+            if(this.checkCollision(rect1, rect2) == true){
+                isMove = false;
+                break;
+            }
+        }
+        if(isMove ==  true) {
+            this.x += this.speedX;
+            this.y += this.speedY;
+        }
+        for(var i = 0; i < this.bullets.length; i++){
+            this.bullets[i].update();
+        }
+    }
+    draw(context) {
         context.drawImage(this.sprite, this.x, this.y);
+        for (var i = 0;i < this.bullet.length;i++)
+        {
+            this.bullet[i].draw(context);
+        }
+
     }
     move(direction){
         switch (direction){
             case 1://up
-                this.speedY = -3;
-                this.speedX = 0;
-                this.sprite = this.spriteUp;
-                this.direction = 1;
-                break;
+            this.speedY = -3;
+            this.speedX = 0;
+            this.sprite = this.spriteUp;
+            this.direction = 1;
+            break;
             case 2://down
                 this.speedY = 3;
                 this.speedX = 0;
@@ -50,5 +79,9 @@ class Tank{
                 this.direction = 4;
                 break;
         }
+    }
+    shoot(){
+        var bullet = new Bullet(this.x + 13, this.y + 13, this.direction);
+        this.bullet.push(bullet);
     }
 }   
