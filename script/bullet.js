@@ -20,8 +20,18 @@ class Bullet {
         this.spriteRight.src = "images/bullet_right.png";
         this.move(direction)
     }
+    checkCollision(rect1, rect2) {
+        if (rect1.x < rect2.x + rect2.width &&
+            rect1.x + rect1.width > rect2.x &&
+            rect1.y < rect2.y + rect2.height &&
+            rect1.height + rect1.y > rect2.y) {
+            return true;
+        }
+        return false;
+    }
+    
 
-    move(direction)     {
+    move(direction){
         switch(direction){
             case 1://up
                 this.speedY = -3;
@@ -50,11 +60,11 @@ class Bullet {
             }
     }
 
-    update() {
-        this.x += this.speedX;
-        this.y += this.speedY;
-    }
-    draw(context){
-        context.drawImage(this.sprite,this.x,this.y);
-    };
+        update(){
+                this.x += this.speedX;
+                this.y += this.speedY;
+            }
+        draw(context) {
+            context.drawImage(this.sprite, this.x, this.y);
+        }
 }
