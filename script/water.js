@@ -11,6 +11,6 @@ class wallWater{
         this.sprite.update();
     }
     draw(context){
-        this.sprite.draw(context);
+        this.sprite.draw(context);  
     }
 }
